@@ -1,0 +1,139 @@
+#!/usr/bin/env python3
+from flask import Flask, render_template, request, jsonify
+from flask_socketio import SocketIO, emit
+import requests
+import json
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'console_secret_key'
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+C2_SERVER_URL = "https://localhost:443"  # Your C2 server URL
+
+@app.route('/')
+def index():
+    return render_template('dashboard.html')
+
+@app.route('/api/agents')
+def get_agents():
+    """Fetch agents from C2 server"""
+    try:
+        response = requests.get(f"{C2_SERVER_URL}/api/agents", verify=False)
+        return jsonify(response.json())
+    except:
+        return jsonify([])
+
+@app.route('/api/send_command', methods=['POST'])
+def send_command():
+    """Send command to agent"""
+    data = request.json
+    try:
+        # This would interface with your C2 server's task system
+        response = requests.post(
+            f"{C2_SERVER_URL}/api/task",
+            json=data,
+            verify=False
+        )
+        return jsonify(response.json())
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@socketio.on('command')
+def handle_command(data):
+    """Handle WebSocket command"""
+    emit('command_response', {'status': 'received', 'data': data})
+
+if __name__ == '__main__':
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)1~#!/usr/bin/env python3
+from flask import Flask, render_template, request, jsonify
+from flask_socketio import SocketIO, emit
+import requests
+import json
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'console_secret_key'
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+C2_SERVER_URL = "https://localhost:443"  # Your C2 server URL
+
+@app.route('/')
+def index():
+    return render_template('dashboard.html')
+
+@app.route('/api/agents')
+def get_agents():
+    """Fetch agents from C2 server"""
+    try:
+        response = requests.get(f"{C2_SERVER_URL}/api/agents", verify=False)
+        return jsonify(response.json())
+    except:
+        return jsonify([])
+
+@app.route('/api/send_command', methods=['POST'])
+def send_command():
+    """Send command to agent"""
+    data = request.json
+    try:
+        # This would interface with your C2 server's task system
+        response = requests.post(
+            f"{C2_SERVER_URL}/api/task",
+            json=data,
+            verify=False
+        )
+        return jsonify(response.json())
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@socketio.on('command')
+def handle_command(data):
+    """Handle WebSocket command"""
+    emit('command_response', {'status': 'received', 'data': data})
+
+if __name__ == '__main__':
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)1~#!/usr/bin/env python3
+from flask import Flask, render_template, request, jsonify
+from flask_socketio import SocketIO, emit
+import requests
+import json
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'console_secret_key'
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+C2_SERVER_URL = "https://localhost:443"  # Your C2 server URL
+
+@app.route('/')
+def index():
+    return render_template('dashboard.html')
+
+@app.route('/api/agents')
+def get_agents():
+    """Fetch agents from C2 server"""
+    try:
+        response = requests.get(f"{C2_SERVER_URL}/api/agents", verify=False)
+        return jsonify(response.json())
+    except:
+        return jsonify([])
+
+@app.route('/api/send_command', methods=['POST'])
+def send_command():
+    """Send command to agent"""
+    data = request.json
+    try:
+        # This would interface with your C2 server's task system
+        response = requests.post(
+            f"{C2_SERVER_URL}/api/task",
+            json=data,
+            verify=False
+        )
+        return jsonify(response.json())
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@socketio.on('command')
+def handle_command(data):
+    """Handle WebSocket command"""
+    emit('command_response', {'status': 'received', 'data': data})
+
+if __name__ == '__main__':
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)

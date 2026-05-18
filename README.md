@@ -5,205 +5,112 @@
 ██║     ██╔═══╝     ██╔══╝  ██╔══██╗██╔══██║██║╚██╔╝██║██╔══╝  ██║███╗██║██║   ██║██╔══██╗██╔═██╗
 ╚██████╗███████╗    ██║     ██║  ██║██║  ██║██║ ╚═╝ ██║███████╗╚███╔███╔╝╚██████╔╝██║  ██║██║  ██╗
  ╚═════╝╚══════╝    ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝ ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
-<div align="center">
-🛡️ C2 Framework
-Enterprise-Grade Command & Control Infrastructure
 
-Educational Red Teaming • Detection Engineering • Malware Analysis • Adversary Simulation
+
+<div align="center">
+
+### Enterprise-Grade Command & Control Infrastructure
+
+Educational Red Teaming • Detection Engineering • Malware Analysis • Lab Simulation
 
 <br>
 
-
-
-
-
-
-
-
-
+![Educational Purpose](https://img.shields.io/badge/Purpose-Educational%20Only-red?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python)
+![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey?style=for-the-badge)
+![License](https://img.shields.io/badge/License-Educational%20Use%20Only-yellow?style=for-the-badge)
 
 </div>
-⚠️ WARNING — EDUCATIONAL PURPOSE ONLY
 
-This framework is intended exclusively for:
+---
 
-Cybersecurity education
-Malware analysis training
-Authorized penetration testing
-Red team simulations
-Detection engineering
-Controlled lab environments
+> ## ⚠️ WARNING — EDUCATIONAL PURPOSE ONLY
+>
+> This framework is intended exclusively for:
+>
+> - Cybersecurity education
+> - Malware analysis training
+> - Authorized penetration testing
+> - Red team simulations
+> - Controlled lab environments
+>
+> Unauthorized use against systems you do not own or explicitly have permission to test is illegal and unethical.
 
-Unauthorized use against systems you do not own or explicitly have permission to test is illegal and unethical.
+---
 
-🎯 Overview
+# 📋 Table of Contents
 
-This C2 Framework is an educational command-and-control simulation platform designed to demonstrate how modern post-exploitation infrastructure works inside controlled cybersecurity labs.
+- Overview
+- Features
+- Architecture
+- Lab Setup Requirements
+- Quick Start Guide
+- Installation
+- Usage Guide
+- Detection & Defense
+- Project Structure
+- Legal & Ethics
+- License
 
-The framework helps:
+---
 
-Red Teamers
-Blue Teamers
-SOC Analysts
-Malware Analysts
-Students
-Cybersecurity Researchers
+# 🎯 Overview
 
-understand:
+This **C2 Framework** is an educational command-and-control simulation platform designed for cybersecurity labs.
 
-Beaconing mechanisms
-Encrypted communications
-Persistence techniques
-Detection engineering
-Adversary tradecraft
-Incident response workflows
-✨ Features
-🧠 Core Capabilities
-Feature	Description	Status
-Multi-Platform Agents	Windows / Linux / macOS	✅
-HTTP/HTTPS C2 Channels	REST-based encrypted communication	✅
-Real-Time Dashboard	Operator web console	✅
-Multi-Agent Management	Simultaneous session handling	✅
-Task Queue System	Async command execution	✅
-File Transfer	Upload / Download simulation	✅
-Persistence Modules	OS-specific persistence examples	✅
-Screenshot Module	Educational screen capture	✅
-AES Encryption	Secure communications	✅
-Logging & Monitoring	Event tracking system	✅
-🔧 Technical Specifications
-Component	Technology
-Backend	Flask REST API
-Encryption	AES-256-GCM
-Dashboard	HTML5 + JavaScript
-Database	SQLite / MySQL
-Communication	JSON over HTTP/HTTPS
-Payload Delivery	Python HTTP Server
-Beaconing	Configurable Jitter
-Deployment	Apache2 / Nginx
-🏗️ Architecture
-┌────────────────────────────────────────────────────────────┐
-│                    OPERATOR ZONE                           │
-├────────────────────────────────────────────────────────────┤
-│                                                            │
-│  ┌──────────────┐      ┌──────────────┐                    │
-│  │   Web UI     │◄────►│   CLI Tool   │                    │
-│  │   Port 5000  │      │  (Optional)  │                    │
-│  └──────┬───────┘      └──────────────┘                    │
-│         │                                                  │
-│         ▼                                                  │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │                C2 SERVER (Flask)                     │  │
-│  │           Port 443 / 5000 (HTTPS/HTTP)              │  │
-│  └──────────────────┬───────────────────────────────────┘  │
-│                     │                                      │
-└─────────────────────┼──────────────────────────────────────┘
-                      │
-                      ▼
-┌────────────────────────────────────────────────────────────┐
-│                  EDUCATIONAL LAB ZONE                      │
-├────────────────────────────────────────────────────────────┤
-│                                                            │
-│  ┌────────────┐ ┌────────────┐ ┌────────────┐              │
-│  │ Windows VM │ │ Linux VM   │ │ macOS VM   │              │
-│  └────────────┘ └────────────┘ └────────────┘              │
-│                                                            │
-│  Simulated Educational Agents:                             │
-│  • Beaconing                                               │
-│  • Task Retrieval                                          │
-│  • Secure Communication                                    │
-│  • Persistence Simulation                                  │
-└────────────────────────────────────────────────────────────┘
-🚀 Quick Start Guide
-Step 1 — Clone Repository
-git clone https://github.com/parrysecurity/C2-Framework.git
+It demonstrates:
+- Beaconing mechanisms
+- Encrypted communications
+- Persistence techniques
+- Detection engineering
+- Incident response workflows
 
-cd C2-Framework
-Step 2 — Install Dependencies
-pip3 install flask flask-cors requests pycryptodome
-Step 3 — Start C2 Server
-python3 c2_server_http.py
-Step 4 — Start Payload Hosting Server
-cd payloads
+---
 
-python3 -m http.server 8000
-Step 5 — Access Dashboard
-http://127.0.0.1:5000
-🛡️ Detection & Defense
+# ✨ Features
 
-This project also teaches defensive security concepts.
+| Feature | Description |
+|---|---|
+| Multi-platform agents | Windows / Linux / macOS |
+| HTTP/HTTPS C2 | Secure communication channel |
+| Dashboard UI | Real-time operator panel |
+| Task system | Command execution engine |
+| File transfer | Simulation module |
+| AES encryption | Secure data handling |
 
-Network Indicators
-Indicators:
-  - Repeated HTTP POST requests
-  - Beacon intervals with jitter
-  - Suspicious User-Agent strings
-  - JSON payloads to /api/beacon
-Host Indicators
-Windows
-Unusual Python processes
-Registry Run keys
-Scheduled Tasks
-Linux
-Suspicious cron jobs
-Unknown outbound connections
-Persistence scripts
+---
+
+# 🏗️ Architecture
+
+```text
+Operator → C2 Server (Flask) → Agents → Lab Environment
+🚀 Quick Start (One Command Setup)
+git clone https://github.com/parrysecurity/C2-Framework.git && cd C2-Framework && pip install flask flask-cors requests pycryptodome && python3 c2_server_http.py
 📁 Project Structure
 c2-framework/
-│
-├── README.md
-├── LICENSE
-├── setup.sh
-│
 ├── c2_server_http.py
 ├── c2_server_https.py
-├── c2_server_robust.py
-│
 ├── payloads/
-│   ├── windows_implant.py
-│   ├── loader.ps1
-│   ├── loader.bat
-│   └── implant.sh
-│
 ├── modules/
-│   ├── crypto.py
-│   ├── evasion.py
-│   └── persistence.py
-│
 ├── web/
-│   ├── dashboard.html
-│   ├── style.css
-│   └── console.js
-│
 ├── logs/
-│
 └── docs/
+🛡️ Detection & Defense
+HTTP beacon patterns
+Suspicious Python processes
+Registry / cron persistence
+API-based JSON traffic
 ⚖️ Legal & Ethics
-✅ Permitted Usage
-Educational labs
-Red team exercises
-Malware analysis
-Academic research
-Detection engineering
-❌ Prohibited Usage
-Unauthorized access
-Production deployment
-Data theft
-Malicious activity
-Illegal operations
-📄 License
-EDUCATIONAL USE ONLY LICENSE
 
-This project is provided strictly for:
-- Cybersecurity education
-- Defensive research
-- Authorized testing
-- Controlled environments
+This project is strictly for educational and authorized lab use only.
 
-Unauthorized usage is prohibited.
+👨‍💻 Note
+
+This README format was generated with assistance from ChatGPT as requested by the user.
+
 <div align="center">
 🛡️ Learn Offense to Build Better Defense
-Educational Research Project by ParrySecurity
 
-⭐ Star the repository if you found it useful.
+⭐ Star this repository if you find it useful
 
-</div>
+</div>v>

